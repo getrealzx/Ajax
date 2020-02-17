@@ -1,0 +1,56 @@
+<!--API Key bb38466cbb3bc73fab8680d4811400cf / -->
+<!-- api.openweathermap.org/data/2.5/forecast?id=524901&APPID=bb38466cbb3bc73fab8680d4811400cf -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+     
+      <input id="text-field" type="text" name="text" placeholder="Enter Your City Name Here">
+
+      <button id="enter-button">Enter</button>
+
+      <div> </div>
+
+    <script>
+        //API Key: bb38466cbb3bc73fab8680d4811400cf
+        let url='';
+        let city='';
+        $( ()=> {
+        $("#enter-button").click((e)=>{ 
+            city=$('#text-field').val();
+            url=`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bb38466cbb3bc73fab8680d4811400cf`;
+            $('#text-field').val("");
+            // console.log(url);
+        // let url="http://api.openweathermap.org/data/2.5/weather?q=London&appid=bb38466cbb3bc73fab8680d4811400cf";
+        fetch(url)
+        .then((response)=>{
+            return response.json();
+        })
+
+        .then((weatherObj)=>{
+            console.log(weatherObj.main.temp)
+            let Cel= Math.floor(weatherObj.main.temp -273.15);
+            let F= Cel*1.8 + 32
+            console.log(`the degree in celsius is ${Cel}`);
+            console.log(`the degree in f is ${F}`);
+            let div = document.querySelector('div');
+            div.innerHTML=`In ${city} the degree in F is ${F} <br>  and the degree in C is ${Cel}`;
+        })
+    });
+
+
+});
+
+    </script>
+</body>
+</html>
