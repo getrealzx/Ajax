@@ -25,17 +25,16 @@
         <ul></ul>
     </div>
     <!-- <a href="https://www.anapioficeandfire.com/api/houses/378"> House Targaryen of King's Landing. </a> -->
+    <div id="houseBox"> </div>
 
 
 <script> ///name list
 
 $(()=>{
     let i=0;
-    for(let p=1; p<=1;p++){ //max 50
+    for(let p=1; p<=2;p++){ //max 50
         $.get(`https://www.anapioficeandfire.com/api/characters?page=${p}&pageSize=50`)
-        .done((response)=>{
-            // console.log(response);
-        })
+        .done((response)=>{})
         
         .then((jsonArr)=>{
             console.log(jsonArr);
@@ -49,10 +48,8 @@ $(()=>{
                 }
                 
             });
-            
         })
     }
-
     })
 
 
@@ -63,6 +60,7 @@ $(()=>{
     // let $li=$('<li>');
     //     $li.html('');
     $("ul").click((e)=>{ 
+        let housesLink="";
         e.preventDefault();
         console.log("the targget is");
         console.log(e.target);
@@ -87,7 +85,7 @@ $(()=>{
                 console.log(hUrl);                
                 fetch(hUrl)
 
-                let housesLink="";
+                
                 .then(response => response.json())
                 .then(json=>{
                     // console.log(json.name);
@@ -99,9 +97,10 @@ $(()=>{
                     if(json.name!=""){
                         // liTag.append($li);
                         // liTag.append( `<li> House Targaryen of King's Landing. </li>`)
-                        // $("li").append($li.html());
+                        $("#houseBox").html(housesLink);
                         // e.target.parentElement.append(`<a href="${hUrl}"> ${json.name}. </a>`);
                         // liTag.append(`<span>any thing</span>`);
+
 
 
                     }
