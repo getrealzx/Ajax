@@ -17,15 +17,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>GOT</title>
 </head>
 <body>
-    
+    <div id="ResidenceInfo"> Residence Info: <hr><hr>
+    <div id="houseBox"> </div>
+    </div>
     <div> 
         <ul></ul>
     </div>
     <!-- <a href="https://www.anapioficeandfire.com/api/houses/378"> House Targaryen of King's Landing. </a> -->
-    <div id="houseBox"> </div>
 
 
 <script> ///name list
@@ -44,7 +46,7 @@ $(()=>{
                 i++;
                 var CharURL=char.url;
                 if(char.name!=""){
-                    $('ul').append(`<li><a href="${char.url}">Charater # ${i} and CharName is ${char.name}.</a></li>`);
+                    $('ul').append(`<li><a href="${char.url}">Char # ${i} is ${char.name}.</a></li>`);
                 }
                 
             });
@@ -80,32 +82,24 @@ $(()=>{
         .then(response => response.json())
         .then(json => {
             console.log(2);
-            json.allegiances.map((hUrl)=>{
-            
-                console.log(hUrl);                
-                fetch(hUrl)
+            console.log(json);
 
-                
-                .then(response => response.json())
-                .then(json=>{
-                    // console.log(json.name);
-                    housesLink =`<span>  <a href="${hUrl}"> ${json.name}. </a> </span>`;
-                    // $li.html(housesLink);
-                    // console.log($li);
-                    // console.log($li.html());
-                    
-                    if(json.name!=""){
-                        // liTag.append($li);
-                        // liTag.append( `<li> House Targaryen of King's Landing. </li>`)
+
+            if(json.allegiances!=""){
+                json.allegiances.map((hUrl)=>{
+                    console.log(hUrl);                
+                    fetch(hUrl)
+                    .then(response => response.json())
+                    .then(json=>{
+                        // console.log(json.name);
+                        housesLink =`${housesLink} <span>  <a href="${hUrl}"> ${json.name}. </a> </span> <hr>`;
                         $("#houseBox").html(housesLink);
-                        // e.target.parentElement.append(`<a href="${hUrl}"> ${json.name}. </a>`);
-                        // liTag.append(`<span>any thing</span>`);
-
-
-
-                    }
+                    })
                 })
-            })
+            }
+            else{
+                $("#houseBox").html(`${json.name} is homeless.`);
+            };
         })
     });
 
