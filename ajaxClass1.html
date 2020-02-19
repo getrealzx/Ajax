@@ -74,9 +74,9 @@
             })
 
             .then((jsonArr)=>{
-                console.log(jsonArr);
+                // console.log(jsonArr);
                 let LiArray = jsonArr.map((cmt)=>{
-
+                    console.log(cmt.email);
                     return `<li>${cmt.email}</li>`
                 });
                 $('ul').append(LiArray);

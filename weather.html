@@ -18,7 +18,7 @@
       <input id="text-field" type="text" name="text" placeholder="Enter Your City Name Here">
 
       <button id="enter-button">Enter</button>
-
+ 
       <div> </div>
 
     <script>
@@ -26,31 +26,31 @@
         let url='';
         let city='';
         $( ()=> {
-        $("#enter-button").click((e)=>{ 
-            city=$('#text-field').val();
-            url=`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bb38466cbb3bc73fab8680d4811400cf`;
-            $('#text-field').val("");
-            // console.log(url);
-        // let url="http://api.openweathermap.org/data/2.5/weather?q=London&appid=bb38466cbb3bc73fab8680d4811400cf";
-        fetch(url)
-        .then((response)=>{
-            return response.json();
-        })
+            $("#enter-button").click((e)=>{ 
+                city=$('#text-field').val();
+                url=`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bb38466cbb3bc73fab8680d4811400cf`;
+                $('#text-field').val("");
+                // console.log(url);
+            // let url="http://api.openweathermap.org/data/2.5/weather?q=London&appid=bb38466cbb3bc73fab8680d4811400cf";
+            fetch(url)
+            .then((response)=>{
+                return response.json();
+            })
 
-        .then((weatherObj)=>{
-            console.log(weatherObj.main.temp)
-            let Cel= Math.floor(weatherObj.main.temp -273.15);
-            let F= Cel*1.8 + 32
-            console.log(`the degree in celsius is ${Cel}`);
-            console.log(`the degree in f is ${F}`);
-            let div = document.querySelector('div');
-            div.innerHTML=`In ${city} the degree in F is ${F} <br>  and the degree in C is ${Cel}`;
-        })
-    });
+            .then((weatherObj)=>{
+                console.log(weatherObj.main.temp)
+                let Cel= Math.round(weatherObj.main.temp -273.15);
+                let F= Cel*1.8 + 32
+                console.log(`the degree in celsius is ${Cel}`);
+                console.log(`the degree in f is ${F}`);
+                let div = document.querySelector('div');
+                div.innerHTML=`In ${city} the degree in F is ${F} <br>  and the degree in C is ${Cel}`;
+            })
+        });
 
 
-});
+        }); 
 
-    </script>
+    </script> w
 </body>
 </html>

@@ -1,0 +1,149 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@getrealzx 
+plaetzaw
+/
+jQuery
+1
+00
+ Code Issues 0 Pull requests 0 Actions Projects 0 Wiki Security Insights
+jQuery/GOT.html
+@plaetzaw plaetzaw It technically works
+634a967 6 hours ago
+117 lines (114 sloc)  3.83 KB
+  
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Game of Thrones Characters</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="GOT.CSS" />
+    <style>
+      /* .background {
+        /* background-image: url(https://i2.wp.com/wallur.com/wp-content/uploads/2016/12/got-background-6.jpg?w=1920); */
+      /* } */
+    </style>
+  </head>
+  <body>
+    <div id='HouseInfo'></div>
+    <div class="background">
+      <div id="characters">
+        </div>
+        <ul></ul>
+      </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(() => {
+        let i = 0;
+        let fullCharList = [];
+        for (let p = 1; p <= 50; p++) {
+          fetch(
+            `https://anapioficeandfire.com/api/characters?page=${p}&pageSize=50`
+          )
+            .then(response => {
+              return response.json();
+            })
+            .then(charArray => {
+              fullCharList = [...fullCharList, ...charArray];
+            })
+            .then(() => {
+              // console.log(fullCharList);
+              let everyone = fullCharList.map(array => {
+                return `<li><a href=${array.allegiances}>${array.name}</a></li>`;
+              });
+              let chars = document.querySelector("#characters");
+              chars.innerHTML = everyone.join("");
+            });
+        }
+        characters.addEventListener("click", e => {
+          e.preventDefault();
+          console.log("I exist");
+          console.log(e);
+          let alist = document.querySelector("a");
+          // e.alist.target;
+          let url = e.target.href;
+          console.log(url);
+          fetch(url)
+            .then(response => {
+              return response.json();
+            })
+            .then(array => {
+              console.log(array);
+              let pops = document.querySelector("#HouseInfo");
+              $("#HouseInfo").text(
+                array.name,
+              );
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
+
+<!-- // 1. API Call to get the list of characters
+    // 2. Place results inside of DOM
+    // <a href='url to detalied character info'    > charcter name>
+    //     3. Create DOM elementrepresenting all a tags on the page
+    // A. AddEventListener('click', (e)) => {
+    //    new API call=  e:target
+    //    new API call off  the call
+    //     new Data
+    //     display data on page -->
+
+<!-- function createPopup() {
+  addEventListener("click", e => {
+    // let alist = document.querySelector("a");
+    let text = `You have selected ${array.name} from ${array.region}. They have been dubbed ${array.titles}`;
+    let pops = document.querySelector("#myPopup");
+    pops.innerHTML.$(text).appendTo("#myPopup");
+    popup.classList.toggle("show");
+  });
+} -->
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About

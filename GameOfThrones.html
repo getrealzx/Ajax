@@ -1,0 +1,117 @@
+<!-- 1, API call to get list of Char
+2,Plase result inside of DOM
+    <a href="ult to detailed char info"> char name</a>
+3,create DOM element represent all a tags to page 
+    a.addEventListner("click",(e)=>{
+        new apiCall= e.target.href
+    })
+
+    -new API 
+        -new data
+        -display data on the page -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>GOT</title>
+</head>
+<body>
+    
+    <div> 
+        <ul></ul>
+    </div>
+    <!-- <a href="https://www.anapioficeandfire.com/api/houses/378"> House Targaryen of King's Landing. </a> -->
+
+
+<script> ///name list
+
+$(()=>{
+    let i=0;
+    for(let p=1; p<=1;p++){ //max 50
+        $.get(`https://www.anapioficeandfire.com/api/characters?page=${p}&pageSize=50`)
+        .done((response)=>{
+            // console.log(response);
+        })
+        
+        .then((jsonArr)=>{
+            console.log(jsonArr);
+            console.log(1);
+            let LinkArray = jsonArr.map((char)=>{
+                // console.log(char.url);
+                i++;
+                var CharURL=char.url;
+                if(char.name!=""){
+                    $('ul').append(`<li><a href="${char.url}">Charater # ${i} and CharName is ${char.name}.</a></li>`);
+                }
+                
+            });
+            
+        })
+    }
+
+    })
+
+
+</script>
+
+<script>
+    
+    // let $li=$('<li>');
+    //     $li.html('');
+    $("ul").click((e)=>{ 
+        e.preventDefault();
+        console.log("the targget is");
+        console.log(e.target);
+        console.log(e.target.href);
+        console.log(e.target.parentNode);
+        console.log(e.target.parentElement);
+        console.log(e.target.parentNode.parentNode);
+
+        // let liTag=e.target.parentNode.querySelectorAll("li");
+        // console.log(liTag);
+
+
+
+    
+
+        fetch(e.target)
+        .then(response => response.json())
+        .then(json => {
+            console.log(2);
+            json.allegiances.map((hUrl)=>{
+            
+                console.log(hUrl);                
+                fetch(hUrl)
+
+                let housesLink="";
+                .then(response => response.json())
+                .then(json=>{
+                    // console.log(json.name);
+                    housesLink =`<span>  <a href="${hUrl}"> ${json.name}. </a> </span>`;
+                    // $li.html(housesLink);
+                    // console.log($li);
+                    // console.log($li.html());
+                    
+                    if(json.name!=""){
+                        // liTag.append($li);
+                        // liTag.append( `<li> House Targaryen of King's Landing. </li>`)
+                        // $("li").append($li.html());
+                        // e.target.parentElement.append(`<a href="${hUrl}"> ${json.name}. </a>`);
+                        // liTag.append(`<span>any thing</span>`);
+
+
+                    }
+                })
+            })
+        })
+    });
+
+</script>
+
+
+</body>
+</html>        
